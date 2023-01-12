@@ -6,7 +6,7 @@ keyword = ''
 keyword = input('Type a deviantart user to see their recent works!>')
 keyword = keyword.lower()
 
-url = 'https://www.deviantart.com/{}/gallery?page=1'.format(keyword)
+url = 'https://www.deviantart.com/{}/gallery/all'.format(keyword)
 headers = {
     'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36'
 }

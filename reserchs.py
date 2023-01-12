@@ -16,6 +16,10 @@ nd = str(req)
 if nd == '<Response [200]>':
     print(' ')
     print('This user is available!\n')
+else:
+    print(' ')
+    print('This user is not available! Please run this program again.\n')
+    exit()
 
 
 soup = BeautifulSoup(req.content,'html.parser')
@@ -58,4 +62,5 @@ with open(f'{keyword}.csv','w',encoding='utf-8',newline='') as f:
     arts.writerow(csv_header)
     for i in range(10):
         arts.writerow([i+1,lists[i],favelists[i],keyword])
+exit()
 #print(soup.prettify())

@@ -16,7 +16,7 @@ Then, copy the line below (without the ' ') and paste it to the command prompt.
 
 A folder named DeviantartFaveChecker and its contents will appear in your directory.
 
-2. Open the entire folder with your favorite compiler, and run the 'reserch.py' file. 
+2. Open the entire folder with your favorite compiler, and run the 'reserchs.py' file. 
 You will be asked about the deviant name you wanted to check.
 Keep in mind that this favechecker can tolerate uppercase and lowercase letters, but not typos.
 The program will continue properly if the user is found.
@@ -26,3 +26,4 @@ The program will continue properly if the user is found.
 # Hopes for Future Works
 1. Ranking Recent Works based on faves
 2. Better Error Handling
+3. More detailed number of faves (1K and up)

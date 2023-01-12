@@ -1,6 +1,8 @@
 # DeviantartFaveChecker
 By: Okaminokiba315
 
+get-pip.py from pypa.io
+
 This mini project is useful to see a summary of your and your fellow deviant's recent arts number of favorites.
 
 ![Screenshot 2023-01-12 141556](https://user-images.githubusercontent.com/97293254/212002194-e35e0573-2405-4e72-8792-f806dfcfeaa3.jpg)

@@ -40,17 +40,23 @@ for i in items:
 
 faves = soup.find_all('button',{'class':'_3Vvhk x48yz'})
 favelists = []
+
 a = 0
-while a < 10: 
-    faveone = faves[a].find_all('span')
+
+for i in faves:
+    try:
+        faveone = faves[a].find_all('span')       
+    except IndexError as e:
+        print("This user needs to draw more art!")
     favecount = str(faveone[1])
     favecount = favecount.strip('<span>')
     favecount = favecount.strip('</span>')
     favelists.append(favecount)
     a = a+1
 
+
 count = 1
-for i in range(len(lists)):
+for i in range(len(favelists)):
     print(f'{count}. '+lists[i]+" - "+favelists[i]+" favorites")
     count = count+1
 
@@ -60,7 +66,7 @@ csv_header = ['No.', 'Title', 'Faves', 'Artist']
 with open(f'{keyword}.csv','w',encoding='utf-8',newline='') as f:
     arts = csv.writer(f)
     arts.writerow(csv_header)
-    for i in range(10):
+    for i in range(len(lists)):
         arts.writerow([i+1,lists[i],favelists[i],keyword])
 exit()
 #print(soup.prettify())

@@ -23,7 +23,7 @@ else:
 
 
 soup = BeautifulSoup(req.content,'html.parser')
-
+dicts = {}
 keyword = keyword.upper()
 print(f'LIST OF RECENT {keyword} WORKS')
 print('''
@@ -48,18 +48,42 @@ for i in faves:
         faveone = faves[a].find_all('span')       
     except IndexError as e:
         print("This user needs to draw more art!")
+    
     favecount = str(faveone[1])
+    
     favecount = favecount.strip('<span>')
     favecount = favecount.strip('</span>')
+    
     favelists.append(favecount)
+    favecountint = int(favecount)
+    dicts.update({lists[a]:favecountint})
     a = a+1
-
 
 count = 1
 for i in range(len(favelists)):
     print(f'{count}. '+lists[i]+" - "+favelists[i]+" favorites")
+    #numberedfaves = int(favelists[i])
+    
     count = count+1
+sorteddict = sorted(dicts.items(), key = lambda kv: kv[1])
+sorteddict = dict(sorteddict)
+sorteddict2 = sorted(dicts.items(), key = lambda kv: kv[1], reverse=True)
+sorteddict2 = dict(sorteddict2)
+print(("\nThe least favorited deviation recently is "+next(iter(sorteddict)) +" with "+str(list(sorteddict.items())[0][1])+" favorites\nand the most favorited deviation recently is "+next(iter(sorteddict2))+" with "+str(list(sorteddict2.items())[0][1]))+" favorites")
+greatest = int((list(sorteddict2.items())[0][1]))
+lowest = int((list(sorteddict.items())[0][1]))
+between = greatest-lowest
+diffs = between/greatest
+diffs = diffs * 100
+#diffs = round(diffs, 1) * 100
+diffs = str(diffs)
+print(f"The max difference of fave earned by two most recent pictures are {diffs}%")
 
+
+#list(sorteddict)[0]
+#next(iter(sorteddict))
+#axa = list(sorteddict)[0]
+#print(f"The most faved art recently is {axa}")
 
 keyword = keyword.lower()
 csv_header = ['No.', 'Title', 'Faves', 'Artist']

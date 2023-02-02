@@ -80,7 +80,7 @@ for i in sensitive:
     i = i.strip('</')
     sensilist.append(i)
 
-if len(sensilist) == 0:
+if len(items) == 0:
     print("They got no posts for now.\n")
     exit()
 

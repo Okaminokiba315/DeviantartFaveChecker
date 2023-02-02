@@ -1,7 +1,7 @@
 # DeviantartFaveChecker
 By: Okaminokiba315
 
-# Update, 1st Feb 2023 = Least faved and most faved, with percentage of faves difference.
+
 
 get-pip.py from pypa.io
 
@@ -44,3 +44,8 @@ The program will continue properly if the user is found.
 1. Ranking Recent Works based on faves
 2. Better Error Handling
 3. Better handling for deviants with fave number of 1K and up
+
+# Updates
+
+-1st Feb 2023 = Least faved and most faved, with percentage of faves difference.
+-2nd Feb 2023 = Handling 1K+ faves with basic approach (removing '.' and converting K to '000')

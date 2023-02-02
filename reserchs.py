@@ -54,8 +54,19 @@ for i in faves:
     favecount = favecount.strip('<span>')
     favecount = favecount.strip('</span>')
     
-    favelists.append(favecount)
+    
+    
+    if "." in favecount:
+        favecount=favecount.replace(".","")
+        if "K" in favecount:
+            favecount=favecount.replace("K","00")
+    else:
+        if "K" in favecount:
+            favecount=favecount.replace("K","000")
+
+        
     favecountint = int(favecount)
+    favelists.append(favecount)
     dicts.update({lists[a]:favecountint})
     a = a+1
 
@@ -75,7 +86,7 @@ lowest = int((list(sorteddict.items())[0][1]))
 between = greatest-lowest
 diffs = between/greatest
 diffs = diffs * 100
-#diffs = round(diffs, 1) * 100
+diffs = round(diffs, 2)
 diffs = str(diffs)
 print(f"The max difference of fave earned by two most recent pictures are {diffs}%")
 

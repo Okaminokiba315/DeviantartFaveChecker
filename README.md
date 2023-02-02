@@ -3,7 +3,9 @@ By: Okaminokiba315
 
 
 
+Outside Sources:
 get-pip.py from pypa.io
+URL Extreactor from https://github.com/lipoja/URLExtract
 
 This mini project is useful to see a summary of your and your fellow deviant's recent arts number of favorites.
 
@@ -20,7 +22,7 @@ A folder named DeviantartFaveChecker and its contents will appear in your direct
 
 2. Open the entire folder with your favorite compiler, and run the 'reserchs.py' file. 
 If you have downloaded the package for the first time, you might be asked to
-install "requests" and "bs4" (Thanks PeterKart for pointing out).
+install "requests", "urlextract", and "bs4" (Thanks PeterKart for pointing out).
 There's also user-agent field that might have to be replaced first.
 Find your user agent here:
 https://www.whatismybrowser.com/detect/what-is-my-user-agent/
@@ -48,4 +50,4 @@ The program will continue properly if the user is found.
 # Updates
 
 -1st Feb 2023 = Least faved and most faved, with percentage of faves difference.
--2nd Feb 2023 = Handling 1K+ faves with basic approach (removing '.' and converting K to '000')
+-2nd Feb 2023 = Handling 1K+ faves with basic approach (removing '.' and converting K to '000'), Adding Links and Mature content warning for some artists

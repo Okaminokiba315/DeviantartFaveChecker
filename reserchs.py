@@ -35,6 +35,20 @@ keyword = keyword.upper()
 print(f'LIST OF RECENT {keyword} WORKS')
 print('''
 ''')
+sensiti = soup.find_all('a',{'data-hook':'deviation_link'})
+maturelevel = []
+for i in range (len(sensiti)):
+    if i % 2 == 1:
+        x = str(sensiti[i])
+        if '<div class="tF4Rv">May contain sensitive content</div>' in x:
+            maturelevel.append('Suggestive') 
+        elif '<div class="tF4Rv">Sensitive content</div>' in x:
+            maturelevel.append('Mature') 
+        else:
+            maturelevel.append('Safe')         
+
+
+
 items = soup.find_all('div',{'class':'_22J_R'})
 lists = []
 for i in items:
@@ -144,7 +158,7 @@ for i in faves:
 
 count = 1
 for i in range(len(favelists)):
-    print(f'{count}. '+lists[i]+" - "+favelists[i]+" favorites,\nLink: "+linklists[i]+"\n")
+    print(f'{count}. '+lists[i]+" - "+favelists[i]+" favorites,\n"+"Mature Level: "+maturelevel[i]+",\nLink: "+linklists[i]+"\n")
     #numberedfaves = int(favelists[i])
     
     count = count+1

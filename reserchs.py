@@ -66,6 +66,10 @@ for i in sensitive:
     i = i.strip('</')
     sensilist.append(i)
 
+if len(sensilist) == 0:
+    print("They got no posts for now.\n")
+    exit()
+
 questionable = 0
 straight_nsfw = 0
 if len(lists) <= 10:
@@ -80,13 +84,29 @@ if len(lists) <= 10:
         else:
             print("\nThis artist's contents are not safe for work.\n")
     elif len(sensilist) > ((4 * len(lists))/10):
-        print("\nSome of this artist's contents might not be safe for work.\n")
+        for a in sensilist:
+            if "May" in a:
+                questionable = questionable + 1
+            else:
+                straight_nsfw = straight_nsfw + 1
+        if questionable >= straight_nsfw:
+            print("\nSome of this artist's contents might not be safe for work and some are suggestive.\n")
+        else:
+            print("\nSome of this artist's contents are not be safe for work.\n")
     elif len(sensilist) >= ((1 * len(lists))/10) and len(sensilist) <= ((4 * len(lists))/10):
+        for a in sensilist:
+            if "May" in a:
+                questionable = questionable + 1
+            else:
+                straight_nsfw = straight_nsfw + 1
         print("\nThis artist's contents are mostly safe for work!\n")
     else:
         print("\nThis artist's contents are safe for work!\n")
 
-print(f"\nFrom their {len(lists)} recent works, {len(sensilist)} are either questionable or mature.")
+if questionable > 0 or straight_nsfw > 0:
+    print(f"\nFrom their {len(lists)} recent works, {questionable} are questionable, and {straight_nsfw} are mature.\n")
+else:
+     print(f"\nFrom their {len(lists)} recent works, {len(sensilist)} are either questionable or mature.")
 
 
 faves = soup.find_all('button',{'class':'_3Vvhk x48yz'})

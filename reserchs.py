@@ -15,20 +15,26 @@ headers = {
 req = requests.get(url,headers=headers)
 
 nd = str(req)
+soup = BeautifulSoup(req.content,'html.parser')
+with open(f'{keyword}.txt','w',encoding='utf-8',newline='') as fyle:
+    fyle.write(soup.prettify())
+    fyle.close()
 if nd == '<Response [200]>':
     print(' ')
     print('This user is available!\n')
 
 else:
     print(' ')
+    deact = str(soup.prettify())
+    if "DeviantArt: Deactivated Account" in deact:
+        print('Deactivated Account!\n')
+    elif "DeviantArt: 404" in deact:
+        print('Account has never existed!\n')
     print('This user is not available! Please run this program again.\n')
     exit()
 
 
-soup = BeautifulSoup(req.content,'html.parser')
-#with open(f'{keyword}.txt','w',encoding='utf-8',newline='') as fyle:
-#    fyle.write(soup.prettify())
-#    fyle.close()
+
 
 dicts = {}
 keyword = keyword.upper()
@@ -36,15 +42,23 @@ print(f'LIST OF RECENT {keyword} WORKS')
 print('''
 ''')
 sensiti = soup.find_all('a',{'data-hook':'deviation_link'})
+
 maturelevel = []
 for i in range (len(sensiti)):
+    #print(f"{i}.{str(sensiti[i])}")
     if i % 2 == 1:
         x = str(sensiti[i])
         if '<div class="tF4Rv">May contain sensitive content</div>' in x:
+            #print(x)
+            #print('Suggestive')
             maturelevel.append('Suggestive') 
         elif '<div class="tF4Rv">Sensitive content</div>' in x:
             maturelevel.append('Mature') 
+            #print(x)
+            #print('Mature')
         else:
+            #print(x)
+            #print('Safe')
             maturelevel.append('Safe')         
 
 
@@ -183,10 +197,10 @@ print(f"The max difference of fave earned by two most recent pictures are {diffs
 #print(f"The most faved art recently is {axa}")
 
 keyword = keyword.lower()
-csv_header = ['No.', 'Title', 'Faves', 'Artist','Link']
+csv_header = ['No.', 'Title', 'Faves', 'Artist','Mature','Link']
 with open(f'{keyword}.csv','w',encoding='utf-8',newline='') as f:
     arts = csv.writer(f)
     arts.writerow(csv_header)
     for i in range(len(lists)):
-        arts.writerow([i+1,lists[i],favelists[i],keyword,linklists[i]])
+        arts.writerow([i+1,lists[i],favelists[i],keyword,maturelevel[i],linklists[i]])
 exit()

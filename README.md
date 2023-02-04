@@ -45,6 +45,10 @@ A folder named DeviantartFaveChecker and its contents will appear in your direct
 2. Open the entire folder with your favorite compiler, and run the 'reserchs.py' file. 
 If you have downloaded the package for the first time, you might be asked to
 install "requests", "urlextract", and "bs4" (Thanks PeterKart for pointing out).
+
+However, now you can install all packages by running 
+'pip install -r requirements.txt' command on your terminal.
+
 There's also user-agent field that might have to be replaced first.
 Find your user agent here:
 https://www.whatismybrowser.com/detect/what-is-my-user-agent/

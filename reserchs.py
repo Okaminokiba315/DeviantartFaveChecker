@@ -14,7 +14,7 @@ keyword = ''
 keyword = input('Type a deviantart user to see their recent works!>')
 keyword = keyword.lower()
 
-url = 'https://www.deviantart.com/{}/gallery/all'.format(keyword)
+url = 'https://www.deviantart.com/{}/gallery/all?page=1'.format(keyword)
 headers = {
     'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36'
 }
@@ -65,6 +65,9 @@ if keyword.lower() != username.lower():
     nowname = input("Would you like to use their current name (Y/N)?>")
     if nowname == 'Y' or nowname == 'y':
         keyword = username
+    else:
+        keyword = keyword
+
 
 
 keyword = keyword.upper()
@@ -216,10 +219,14 @@ printables+= f"\nThe least favorited deviation recently is {next(iter(sorteddict
 greatest = int((list(sorteddict2.items())[0][1]))
 lowest = int((list(sorteddict.items())[0][1]))
 del sorteddict, sorteddict2
-between = greatest-lowest
-diffs = between/greatest
-diffs = diffs * 100
-diffs = round(diffs, 2)
+
+if greatest == 0 and lowest == 0:
+    diffs = 0
+else:
+    between = greatest-lowest
+    diffs = between/greatest
+    diffs = diffs * 100
+    diffs = round(diffs, 2)
 diffs = str(diffs)
 printables+= f"\nThe max difference of fave earned by two most recent pictures are {diffs}%\n"
 

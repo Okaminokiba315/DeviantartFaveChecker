@@ -53,7 +53,7 @@ dicts = {}
 
 #To determine name change of an user
 name = soup.find_all('span',{'class':'_2UI2c'})
-username = str(name[1])
+username = str(name[0])
 del name
 username = username.strip('span ')
 username = username.strip('</span>')

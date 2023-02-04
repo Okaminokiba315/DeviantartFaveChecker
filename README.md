@@ -1,13 +1,29 @@
 # DeviantartFaveChecker
 By: Okaminokiba315
 
+# Background:
+I have known deviantArt since I was young, probably started on 2012's.
+In 2023, I planned to make a data project based on deviantArt.
+
+With my novice-basic knowledge of Python and Data Scraping, I started off
+by retrieving important datas from front-end/surface like username, work titles, and favorites.
+
+However, I noticed that if used properly, this DA Fave Checker can
+do so much more. It might help people to pick safe deviants to follow (If you see my arts
+you might want to avoid me, but still, feel free to use this tool in consideration.),
+commission potential artists, find old deviants, track deactivated accounts,
+comparing progresses, or just giving quick infos and access to new arts of an artist.
+
+This tool is free for all to use, copy, or modify.
+Any modifications uploaded to the internet mentioning me as the maker of the
+parent code will be highly appreciated.
 
 
-Outside Sources:
+# Outside Sources:
 1. get-pip.py from pypa.io
-2. URL Extreactor from https://github.com/lipoja/URLExtract
+2. URL Extractor from https://github.com/lipoja/URLExtract
 
-This mini project is useful for:
+# This mini project is useful for:
 1. Seeing a summary of your and your fellow deviant's recent arts number of favorites.
 2. Detecting a change of a deviant's username.
 3. Determining whether an account is safe for general audiences or not.
@@ -49,12 +65,12 @@ The program will continue properly if the user is found.
 4. After you see the result, a .csv file would be made.
 
 # Hopes for Future Works
-1. Ranking Recent Works based on faves
-2. Better Error Handling
-3. Better handling for deviants with fave number of 1K and up
+1. Better Error Handling
+2. Better handling for deviants with fave number of 1K and up
+3. Ranking most used tags of a deviant to determine their interests.
 
 # Updates
 
 1. 1st Feb 2023 = Least faved and most faved, with percentage of faves difference.
 2. 2nd Feb 2023 = Handling 1K+ faves with basic approach (removing '.' and converting K to '000'), Adding Links and Mature content warning for some artists
-3. 4th Feb 2023 = Handling mature content indicator separately for visual-art and literature works. Adding choice to display proofs with terminal or by csv table and txt. Deleted repeated function.
+3. 4th Feb 2023 = Handling mature content indicator separately for visual-art and literature works. Adding choice to display proofs with terminal or by csv table and txt. Deleted repeated function. Added documentation.

@@ -4,10 +4,16 @@ By: Okaminokiba315
 
 
 Outside Sources:
-get-pip.py from pypa.io
-URL Extreactor from https://github.com/lipoja/URLExtract
+1. get-pip.py from pypa.io
+2. URL Extreactor from https://github.com/lipoja/URLExtract
 
-This mini project is useful to see a summary of your and your fellow deviant's recent arts number of favorites.
+This mini project is useful for:
+1. Seeing a summary of your and your fellow deviant's recent arts number of favorites.
+2. Detecting a change of a deviant's username.
+3. Determining whether an account is safe for general audiences or not.
+4. Knowing deactivated accounts and unused account names.
+5. Collecting newest proofs of an account's arts in .txt and .csv format.
+6. Basic stats of most popular and least popular arts.
 
 ![Screenshot 2023-01-12 141556](https://user-images.githubusercontent.com/97293254/212002194-e35e0573-2405-4e72-8792-f806dfcfeaa3.jpg)
 
@@ -49,5 +55,6 @@ The program will continue properly if the user is found.
 
 # Updates
 
--1st Feb 2023 = Least faved and most faved, with percentage of faves difference.
--2nd Feb 2023 = Handling 1K+ faves with basic approach (removing '.' and converting K to '000'), Adding Links and Mature content warning for some artists
+1. 1st Feb 2023 = Least faved and most faved, with percentage of faves difference.
+2. 2nd Feb 2023 = Handling 1K+ faves with basic approach (removing '.' and converting K to '000'), Adding Links and Mature content warning for some artists
+3. 4th Feb 2023 = Handling mature content indicator separately for visual-art and literature works. Adding choice to display proofs with terminal or by csv table and txt. Deleted repeated function.

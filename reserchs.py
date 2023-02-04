@@ -4,6 +4,12 @@ from urlextract import URLExtract
 from bs4 import BeautifulSoup
 import csv
 
+questionable = 0
+straight_nsfw = 0
+maturelebels = ['']*10
+
+printables=""
+
 keyword = ''
 keyword = input('Type a deviantart user to see their recent works!>')
 keyword = keyword.lower()
@@ -16,9 +22,13 @@ req = requests.get(url,headers=headers)
 
 nd = str(req)
 soup = BeautifulSoup(req.content,'html.parser')
-with open(f'{keyword}.txt','w',encoding='utf-8',newline='') as fyle:
-    fyle.write(soup.prettify())
-    fyle.close()
+
+def print_txt(keyword):
+    with open(f'{keyword}.txt','w',encoding='utf-8',newline='') as fyle:
+        fyle.write(soup.prettify())
+        fyle.close()
+
+
 if nd == '<Response [200]>':
     print(' ')
     print('This user is available!\n')
@@ -37,31 +47,26 @@ else:
 
 
 dicts = {}
+
+
+
+name = soup.find_all('span',{'class':'_2UI2c'})
+username = str(name[1])
+del name
+username = username.strip('span ')
+username = username.strip('</span>')
+username = username[16:]
+
+if keyword.lower() != username.lower():
+    printables+=f'\nThis user used to be around Deviantart with the name of {keyword.lower()},\nand now their name is {username}\n'
+    print(printables)
+    nowname = input("Would you like to use their current name (Y/N)?>")
+    if nowname == 'Y' or nowname == 'y':
+        keyword = username
+
 keyword = keyword.upper()
-print(f'LIST OF RECENT {keyword} WORKS')
-print('''
-''')
-sensiti = soup.find_all('a',{'data-hook':'deviation_link'})
-
-maturelevel = []
-for i in range (len(sensiti)):
-    #print(f"{i}.{str(sensiti[i])}")
-    if i % 2 == 1:
-        x = str(sensiti[i])
-        if '<div class="tF4Rv">May contain sensitive content</div>' in x:
-            #print(x)
-            #print('Suggestive')
-            maturelevel.append('Suggestive') 
-        elif '<div class="tF4Rv">Sensitive content</div>' in x:
-            maturelevel.append('Mature') 
-            #print(x)
-            #print('Mature')
-        else:
-            #print(x)
-            #print('Safe')
-            maturelevel.append('Safe')         
-
-
+printables += '\nLIST OF RECENT '+ keyword +' WORKS'
+printables += '\n\n'
 
 items = soup.find_all('div',{'class':'_22J_R'})
 lists = []
@@ -73,6 +78,41 @@ for i in items:
     #print(i)
 #print(type(lists[0])) checking type
 
+if len(items) == 0:
+    print("They got no posts for now.\n")
+    exit()
+
+def addappend(lists,sensiti,maturelebels):
+    for i in range (len(sensiti)):
+        x = str(sensiti[i])
+        if '<div class="tF4Rv">May contain sensitive content</div>' in x:
+            for p in range (10):
+                if lists[p] in x:
+                    maturelebels[p] = 'Suggestive'
+                    break 
+            
+        elif '<div class="tF4Rv">Sensitive content</div>' in x:
+            for p in range (10):
+                if lists[p] in x:
+                    maturelebels[p] = 'Mature'
+                    break 
+            
+        else:
+            for p in range (10):
+                if lists[p] in x:
+                    maturelebels[p] = 'Safe'
+                    break   
+
+#sensiti = soup.find_all('a',{'data-hook':'deviation_link'})
+
+sensiti1 = soup.find_all('a',{'class':'_1mCeE'})
+for i in range (len(sensiti1)):
+    addappend(lists,sensiti1,maturelebels)
+
+sensiti2 = soup.find_all('div',{'class':'_1mCeE'})
+for i in range (len(sensiti2)):
+    addappend(lists,sensiti2,maturelebels)
+
 linkss= soup.find_all('a',{'data-hook':'deviation_link'})
 linklists = []
 a = 0
@@ -83,58 +123,36 @@ for i in range (len(linkss)):
         extractor = URLExtract()
         linksone = extractor.find_urls(linksone)
         linklists.append(linksone[0])
-        
 
-
-sensitive = soup.find_all('div',{'class':'tF4Rv'})
-sensilist = []
-for i in sensitive:
-    i=str(i)
-    i = i.strip('<div class="tF4Rv">')
-    i = i.strip('</')
-    sensilist.append(i)
-
-if len(items) == 0:
-    print("They got no posts for now.\n")
-    exit()
-
-questionable = 0
-straight_nsfw = 0
-if len(lists) <= 10:
-    if len(sensilist) > ((7 * len(lists))/10):
-        for a in sensilist:
-            if "May" in a:
-                questionable = questionable + 1
-            else:
-                straight_nsfw = straight_nsfw + 1
-        if questionable > straight_nsfw:
-            print("\nThis artist's contents are mostly suggestive.\n")
-        else:
-            print("\nThis artist's contents are not safe for work.\n")
-    elif len(sensilist) > ((4 * len(lists))/10):
-        for a in sensilist:
-            if "May" in a:
-                questionable = questionable + 1
-            else:
-                straight_nsfw = straight_nsfw + 1
-        if questionable >= straight_nsfw:
-            print("\nSome of this artist's contents might not be safe for work and some are suggestive.\n")
-        else:
-            print("\nSome of this artist's contents are not be safe for work.\n")
-    elif len(sensilist) >= ((1 * len(lists))/10) and len(sensilist) <= ((4 * len(lists))/10):
-        for a in sensilist:
-            if "May" in a:
-                questionable = questionable + 1
-            else:
-                straight_nsfw = straight_nsfw + 1
-        print("\nThis artist's contents are mostly safe for work!\n")
+for i in range (len(maturelebels)):
+    if maturelebels[i] == 'Suggestive':
+        questionable += 1
+    elif maturelebels[i] == 'Mature':
+        straight_nsfw += 1
     else:
-        print("\nThis artist's contents are safe for work!\n")
+        continue
+
+
+if len(lists) <= 10:
+    if (questionable+straight_nsfw) > ((7 * len(lists))/10):
+        if questionable > straight_nsfw:
+            printables+="\nThis artist's contents are mostly suggestive.\n"
+        else:
+            printables+="\nThis artist's contents are not safe for work.\n"
+    elif (questionable+straight_nsfw) > ((4 * len(lists))/10):
+        if questionable >= straight_nsfw:
+            printables+="\nSome of this artist's contents might not be safe for work and some are suggestive.\n"
+        else:
+            printables+="\nSome of this artist's contents are not be safe for work.\n"
+    elif (questionable+straight_nsfw) >= ((1 * len(lists))/10) and (questionable+straight_nsfw) <= ((4 * len(lists))/10):
+        printables+="\nThis artist's contents are mostly safe for work!\n"
+    else:
+        printables+="\nThis artist's contents are safe for work!\n"
 
 if questionable > 0 or straight_nsfw > 0:
-    print(f"\nFrom their {len(lists)} recent works, {questionable} are questionable, and {straight_nsfw} are mature.\n")
+    printables+="\nFrom their "+ str(len(lists)) +" recent works, "+ str(questionable) +" are questionable, and "+ str(straight_nsfw) +" are mature.\n"
 else:
-     print(f"\nFrom their {len(lists)} recent works, {len(sensilist)} are either questionable or mature.")
+    printables+="\nFrom their "+ str(len(lists)) + " recent works, "+ str(questionable+straight_nsfw) +" are either questionable or mature.\n"
 
 
 faves = soup.find_all('button',{'class':'_3Vvhk x48yz'})
@@ -147,10 +165,7 @@ for i in faves:
         faveone = faves[a].find_all('span')       
     except IndexError as e:
         print("This user needs to draw more art!")
-   # print(faveone)
     favecount = str(faveone[1])
-    #print(favecount)
-    
     favecount = favecount.strip('<span>')
     favecount = favecount.strip('</span>')
     
@@ -170,17 +185,15 @@ for i in faves:
     dicts.update({lists[a]:favecountint})
     a = a+1
 
-count = 1
+
 for i in range(len(favelists)):
-    print(f'{count}. '+lists[i]+" - "+favelists[i]+" favorites,\n"+"Mature Level: "+maturelevel[i]+",\nLink: "+linklists[i]+"\n")
-    #numberedfaves = int(favelists[i])
-    
-    count = count+1
+    printables+=f'{i+1}. '+lists[i]+" - "+favelists[i]+" favorites,\n"+"Mature Level: "+maturelebels[i]+",\nLink: "+linklists[i]+"\n"
+
 sorteddict = sorted(dicts.items(), key = lambda kv: kv[1])
 sorteddict = dict(sorteddict)
 sorteddict2 = sorted(dicts.items(), key = lambda kv: kv[1], reverse=True)
 sorteddict2 = dict(sorteddict2)
-print(("\nThe least favorited deviation recently is "+next(iter(sorteddict)) +" with "+str(list(sorteddict.items())[0][1])+" favorites\nand the most favorited deviation recently is "+next(iter(sorteddict2))+" with "+str(list(sorteddict2.items())[0][1]))+" favorites")
+printables+= f"\nThe least favorited deviation recently is {next(iter(sorteddict))} with {str(list(sorteddict.items())[0][1])} favorites\nand the most favorited deviation recently is {next(iter(sorteddict2))} with {str(list(sorteddict2.items())[0][1])} favorites"
 greatest = int((list(sorteddict2.items())[0][1]))
 lowest = int((list(sorteddict.items())[0][1]))
 between = greatest-lowest
@@ -188,19 +201,36 @@ diffs = between/greatest
 diffs = diffs * 100
 diffs = round(diffs, 2)
 diffs = str(diffs)
-print(f"The max difference of fave earned by two most recent pictures are {diffs}%\n")
+printables+= f"\nThe max difference of fave earned by two most recent pictures are {diffs}%\n"
 
-
-#list(sorteddict)[0]
-#next(iter(sorteddict))
-#axa = list(sorteddict)[0]
-#print(f"The most faved art recently is {axa}")
 
 keyword = keyword.lower()
-csv_header = ['No.', 'Title', 'Faves', 'Artist','Mature','Link']
-with open(f'{keyword}.csv','w',encoding='utf-8',newline='') as f:
-    arts = csv.writer(f)
-    arts.writerow(csv_header)
-    for i in range(len(lists)):
-        arts.writerow([i+1,lists[i],favelists[i],keyword,maturelevel[i],linklists[i]])
+
+def save_csv(keyword, lists,favelists,maturelevel,linklists):
+    csv_header = ['No.', 'Title', 'Faves', 'Artist','Mature','Link']
+    with open(f'{keyword}.csv','w',encoding='utf-8',newline='') as f:
+        arts = csv.writer(f)
+        arts.writerow(csv_header)
+        for i in range(len(lists)):
+            arts.writerow([i+1,lists[i],favelists[i],keyword,maturelevel[i],linklists[i]])
+
+def printprintables(printables):
+    with open(f'{keyword}_written_data.txt','w',encoding='utf-8',newline='') as dataz:
+        dataz.write(printables)
+        dataz.close()
+
+printmea = input("\nDisplay results in terminal (Y/N)?>")
+if printmea == 'Y' or printmea == 'y':
+    #print_txt(keyword)
+    print(printables)
+
+printme = input("\nPrint .csv proof (Y/N)?>")
+if printme == 'Y' or printme == 'y':
+    save_csv(keyword, lists,favelists,maturelebels,linklists)
+printme2 = input("\nPrint .txt proof (Y/N)?>")
+if printme2 == 'Y' or printme2 == 'y':
+    #print_txt(keyword)
+    printprintables(printables)
+
+print("\nThank you for using this checker!\n")
 exit()

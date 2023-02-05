@@ -18,6 +18,17 @@ This tool is free for all to use, copy, or modify.
 Any modifications uploaded to the internet mentioning me as the maker of the
 parent code will be highly appreciated.
 
+# Warning
+
+1. Use and modify this program wisely. 
+You can track progresses, deviant trolls, unsafe accounts,
+a bully's activity, collect evidences at real time, etc. 
+I am not responsible for any damages or dramas caused by the usage of this program.
+
+2. This program will not hack or penetrate dA's security in any way, since this program
+only retrieves visible information from the front-end (visible) layer and summarizes it.
+However, the program 'reserchs_alt.py' might cause traffic that returns response 403
+due to retrieving too much URL in some cases.
 
 # Outside Sources:
 1. get-pip.py from pypa.io
@@ -30,6 +41,7 @@ parent code will be highly appreciated.
 4. Knowing deactivated accounts and unused account names.
 5. Collecting newest proofs of an account's arts in .txt and .csv format.
 6. Basic stats of most popular and least popular arts.
+7. Comparing updates based on timestamps.
 
 ![Screenshot 2023-01-12 141556](https://user-images.githubusercontent.com/97293254/212002194-e35e0573-2405-4e72-8792-f806dfcfeaa3.jpg)
 
@@ -82,4 +94,4 @@ to display the result on the terminal.
 2. 2nd Feb 2023 = Handling 1K+ faves with basic approach (removing '.' and converting K to '000'), Adding Links and Mature content warning for some artists
 3. 4th Feb 2023 = Handling mature content indicator separately for visual-art and literature works. Adding choice to display proofs with terminal or by csv table and txt. Deleted repeated function. Added documentation.
 4. 5th Feb 2023 = Added 'reserchs_alt.py'. Limited function and slower than its
-counterpart, but can retrieve more art infos up to all arts of an user.
+counterpart, but can retrieve more art infos up to all arts of an user. Added Timestamps.

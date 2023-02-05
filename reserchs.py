@@ -3,6 +3,7 @@ from urlextract import URLExtract
 #from lipoja https://github.com/lipoja/URLExtract 
 from bs4 import BeautifulSoup
 import csv
+from datetime import datetime
 
 written = False
 questionable = 0
@@ -10,7 +11,14 @@ straight_nsfw = 0
 maturelebels = ['']*10
 arttype = ['']*10
 printables=""
-
+timetaken = datetime.now()
+printables += f"\nData Taken at {timetaken}\n"
+yearz = str(datetime.now().year)
+montz = str(datetime.now().month)
+dias = str(datetime.now().day)
+hrs = str(datetime.now().hour)
+minz = str(datetime.now().minute)
+timetaken2 = f'{yearz}{montz}{dias}{hrs}{minz}' 
 keyword = ''
 keyword = input('Type a deviantart user to see their recent works!>')
 keyword = keyword.lower()
@@ -23,6 +31,28 @@ req = requests.get(url,headers=headers)
 
 nd = str(req)
 soup = BeautifulSoup(req.content,'html.parser')
+
+#Saving in .csv
+def save_csv(keyword, lists,favelists,arttype,maturelevel,linklists):
+    global written,timetaken,timetaken2
+    csv_header = ['No.', 'Title', 'Faves','Type','Artist','Mature','Link']
+    with open(f'{keyword}_lite_{timetaken2}.csv','w',encoding='utf-8',newline='') as f:
+        arts = csv.writer(f)
+        if written == False:
+            arts.writerow(csv_header)
+            written = True
+        for i in range(len(lists)):
+            arts.writerow([i+1,lists[i],favelists[i],arttype[i],keyword,maturelevel[i],linklists[i]])
+        arts.writerow([f'Timestamp taken at {timetaken}'])
+    f.close()
+
+#Saving in .txt
+def printprintables(printables):
+    global timetaken2
+    with open(f'{keyword}_lite_written_data_{timetaken2}.txt','w',encoding='utf-8',newline='') as dataz:
+        dataz.write(printables)
+        dataz.close()
+
 
 #To print entire HTML Page. Used for maintenance.
 def print_txt(keyword):
@@ -61,7 +91,6 @@ username = username[:-7]
 
 if keyword.lower() != username.lower():
     printables+=f'\nThis user used to be around Deviantart with the name of {keyword.lower()},\nand now their name is {username}\n'
-    print(printables)
     nowname = input("Would you like to use their current name (Y/N)?>")
     if nowname == 'Y' or nowname == 'y':
         keyword = username
@@ -85,7 +114,9 @@ for i in items:
     
 #Determining if a user have made no posts.
 if len(items) == 0:
+    printables += '\nThey got no posts for now.\n'
     print("They got no posts for now.\n")
+    printprintables(printables)
     exit()
 
 #Differ Visual and Literature arts and then
@@ -232,24 +263,6 @@ printables+= f"\nThe max difference of fave earned by two most recent pictures a
 
 
 keyword = keyword.lower()
-
-#Saving in .csv
-def save_csv(keyword, lists,favelists,arttype,maturelevel,linklists):
-    global written
-    csv_header = ['No.', 'Title', 'Faves','Type','Artist','Mature','Link']
-    with open(f'{keyword}_lite.csv','w',encoding='utf-8',newline='') as f:
-        arts = csv.writer(f)
-        if written == False:
-            arts.writerow(csv_header)
-            written = True
-        for i in range(len(lists)):
-            arts.writerow([i+1,lists[i],favelists[i],arttype[i],keyword,maturelevel[i],linklists[i]])
-
-#Saving in .txt
-def printprintables(printables):
-    with open(f'{keyword}_lite_written_data.txt','w',encoding='utf-8',newline='') as dataz:
-        dataz.write(printables)
-        dataz.close()
 
 #Displaying results
 printmea = input("\nDisplay results in terminal (Y/N)?>")

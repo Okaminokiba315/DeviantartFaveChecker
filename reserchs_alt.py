@@ -3,12 +3,22 @@ from urlextract import URLExtract
 #from lipoja https://github.com/lipoja/URLExtract 
 from bs4 import BeautifulSoup
 import csv,time
+from datetime import datetime
 
 
 artes = 0
 written = False
 printables=""
+timetaken = datetime.now()
+printables += f"\nData Taken at {timetaken}\n"
+yearz = str(datetime.now().year)
+montz = str(datetime.now().month)
+dias = str(datetime.now().day)
+hrs = str(datetime.now().hour)
+minz = str(datetime.now().minute)
+timetaken2 = f'{yearz}{montz}{dias}{hrs}{minz}' 
 pagenums=1
+
 
 questionable_a = 0
 straight_nsfw_a = 0
@@ -51,20 +61,31 @@ else:
 
 #Saving in .csv
 def save_csv(keyword, lists,favelists,arttype,maturelevel,linklists):
-    global written
+    global written,timetaken,timetaken2
     csv_header = ['Title', 'Faves','Type','Artist','Mature','Link']
     keyword=keyword.lower()
-    with open(f'{keyword}.csv','a+',encoding='utf-8',newline='') as f:
+    with open(f'{keyword}_{timetaken2}.csv','a+',encoding='utf-8',newline='') as f:
         arts = csv.writer(f)
         if written == False:
             arts.writerow(csv_header)
             written = True
         for i in range(len(lists)):
             arts.writerow([lists[i],favelists[i],arttype[i],keyword,maturelevel[i],linklists[i]])
+    f.close()
+
+def save_csv2(keyword):
+    global timetaken,timetaken2
+    keyword=keyword.lower()
+    csv_header = [f'Timestamp taken at {timetaken}']
+    with open(f'{keyword}_{timetaken2}.csv','a+',encoding='utf-8',newline='') as f:
+        arts = csv.writer(f)
+        arts.writerow(csv_header)
+    f.close()
 
 #Saving in .txt
 def printprintables(printables_a):
-    with open(f'{keyword.lower()}_written_data.txt','w',encoding='utf-8',newline='') as dataz:
+    global timetaken2
+    with open(f'{keyword.lower()}_written_data_{timetaken2}.txt','w',encoding='utf-8',newline='') as dataz:
         dataz.write(printables_a)
         dataz.close()
 
@@ -124,21 +145,27 @@ keyword = keyword.upper()
 #print_txt(keyword)
 #exit()
 printme = input("\nPrint .csv proof (Y/N)?>")
+if printme == 'Y' or printme == 'y':
+    save_csv2(keyword)
 printme2 = input("\nPrint .txt proof (Y/N)?>")
 
 printables += '\nLIST OF ALL '+ keyword +' WORKS'
 printables += '\n\n'
 
 totaldevs = soup.find_all('span',{'class':'_2USdI'})
-devsnumber = str(totaldevs[0])
-
-devsnumber = devsnumber[21:]
-devsnumber = devsnumber[:-7]
-devsnumber = int(devsnumber)
-numofdeviation = devsnumber
+if len(totaldevs) > 0: 
+    devsnumber = str(totaldevs[0])
+    devsnumber = devsnumber[21:]
+    devsnumber = devsnumber[:-7]
+    devsnumber = int(devsnumber)
+    numofdeviation = devsnumber
+else:
+    devsnumber = 0
 
 if devsnumber == 0:
     print("They got no posts for now.\n")
+    printables += '\nThey got no posts for now.\n'
+    printprintables(printables)
     exit()
 
 

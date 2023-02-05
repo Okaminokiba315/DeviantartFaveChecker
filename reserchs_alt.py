@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import csv,time
 
 
-
+artes = 0
 written = False
 printables=""
 pagenums=1
@@ -105,9 +105,9 @@ def addappend(lists,sensiti,maturelebels):
 name = soup.find_all('span',{'class':'_2UI2c'})
 username = str(name[0])
 del name
-username = username.strip('span ')
-username = username.strip('</span>')
-username = username[16:]
+username = username[21:]
+username = username[:-7]
+
 
 if keyword.lower() != username.lower():
     printables+=f'\nThis user used to be around Deviantart with the name of {keyword.lower()},\nand now their name is {username}\n'
@@ -131,9 +131,9 @@ printables += '\n\n'
 
 totaldevs = soup.find_all('span',{'class':'_2USdI'})
 devsnumber = str(totaldevs[0])
-devsnumber = devsnumber.strip('<span class="_2USdI">')
-devsnumber = devsnumber.strip('</')
 
+devsnumber = devsnumber[21:]
+devsnumber = devsnumber[:-7]
 devsnumber = int(devsnumber)
 numofdeviation = devsnumber
 
@@ -160,8 +160,8 @@ while devsnumber > 0:
     lists = []
     for i in items:
         i=str(i)
-        i = i.strip('<div class="_22J_R">')
-        i = i.strip('</')
+        i = i[20:]
+        i = i[:-6]
         lists.append(i)
 
     #For visual arts
@@ -227,7 +227,8 @@ while devsnumber > 0:
 
     #Collecting results
     for i in range(len(favelists)):
-        printables+=f'\n-'+lists[i]+" - "+favelists[i]+" favorites,\n"+"Art Type: "+arttype[i]+",\nMature Level: "+maturelebels[i]+",\nLink: "+linklists[i]+"\n"
+        artes += 1
+        printables+=f'\n{artes}. '+lists[i]+" - "+favelists[i]+" favorites,\n"+"Art Type: "+arttype[i]+",\nMature Level: "+maturelebels[i]+",\nLink: "+linklists[i]+"\n"
     if printme == 'Y' or printme == 'y':
         save_csv(keyword, lists,favelists,arttype,maturelebels,linklists)
 

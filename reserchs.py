@@ -56,9 +56,8 @@ dicts = {}
 name = soup.find_all('span',{'class':'_2UI2c'})
 username = str(name[0])
 del name
-username = username.strip('span ')
-username = username.strip('</span>')
-username = username[16:]
+username = username[21:]
+username = username[:-7]
 
 if keyword.lower() != username.lower():
     printables+=f'\nThis user used to be around Deviantart with the name of {keyword.lower()},\nand now their name is {username}\n'
@@ -80,8 +79,8 @@ items = soup.find_all('div',{'class':'_22J_R'})
 lists = []
 for i in items:
     i=str(i)
-    i = i.strip('<div class="_22J_R">')
-    i = i.strip('</')
+    i = i[20:]
+    i = i[:-6]
     lists.append(i)
     
 #Determining if a user have made no posts.

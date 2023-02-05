@@ -133,7 +133,7 @@ totaldevs = soup.find_all('span',{'class':'_2USdI'})
 devsnumber = str(totaldevs[0])
 devsnumber = devsnumber.strip('<span class="_2USdI">')
 devsnumber = devsnumber.strip('</')
-print(devsnumber)
+
 devsnumber = int(devsnumber)
 numofdeviation = devsnumber
 

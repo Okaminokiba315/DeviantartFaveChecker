@@ -14,7 +14,7 @@ questionable_a = 0
 straight_nsfw_a = 0
 
 keyword = ''
-keyword = input('Type a deviantart user to see their recent works!>')
+keyword = input('Type a deviantart user to see their works!>')
 keyword = keyword.lower()
 
 url = 'https://www.deviantart.com/{}/gallery/all?page={}'.format(keyword,pagenums)
@@ -54,7 +54,7 @@ def save_csv(keyword, lists,favelists,arttype,maturelevel,linklists):
     global written
     csv_header = ['Title', 'Faves','Type','Artist','Mature','Link']
     keyword=keyword.lower()
-    with open(f'{keyword}.csv','a',encoding='utf-8',newline='') as f:
+    with open(f'{keyword}.csv','a+',encoding='utf-8',newline='') as f:
         arts = csv.writer(f)
         if written == False:
             arts.writerow(csv_header)
@@ -64,7 +64,7 @@ def save_csv(keyword, lists,favelists,arttype,maturelevel,linklists):
 
 #Saving in .txt
 def printprintables(printables_a):
-    with open(f'{keyword.lower()}_written_data.txt','a',encoding='utf-8',newline='') as dataz:
+    with open(f'{keyword.lower()}_written_data.txt','w',encoding='utf-8',newline='') as dataz:
         dataz.write(printables_a)
         dataz.close()
 

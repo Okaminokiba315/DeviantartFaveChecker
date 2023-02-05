@@ -103,13 +103,13 @@ def addappend(lists,sensiti,maturelebels):
                 if lists[q] in x:
                     arttype[q] = 'Literature'
                     break 
-        if '<div class="tF4Rv">May contain sensitive content</div>' in x:
+        if 'May contain sensitive content' in x:
             for p in range (10):
                 if lists[p] in x:
                     maturelebels[p] = 'Suggestive'
                     break 
             
-        elif '<div class="tF4Rv">Sensitive content</div>' in x:
+        elif 'Sensitive content' in x:
             for p in range (10):
                 if lists[p] in x:
                     maturelebels[p] = 'Mature'
@@ -235,8 +235,9 @@ keyword = keyword.lower()
 
 #Saving in .csv
 def save_csv(keyword, lists,favelists,arttype,maturelevel,linklists):
+    global written
     csv_header = ['No.', 'Title', 'Faves','Type','Artist','Mature','Link']
-    with open(f'{keyword}.csv','w',encoding='utf-8',newline='') as f:
+    with open(f'{keyword}_lite.csv','w',encoding='utf-8',newline='') as f:
         arts = csv.writer(f)
         if written == False:
             arts.writerow(csv_header)
@@ -246,7 +247,7 @@ def save_csv(keyword, lists,favelists,arttype,maturelevel,linklists):
 
 #Saving in .txt
 def printprintables(printables):
-    with open(f'{keyword}_written_data.txt','w',encoding='utf-8',newline='') as dataz:
+    with open(f'{keyword}_lite_written_data.txt','w',encoding='utf-8',newline='') as dataz:
         dataz.write(printables)
         dataz.close()
 

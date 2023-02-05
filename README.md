@@ -43,6 +43,17 @@ due to retrieving too much URL in some cases.
 6. Basic stats of most popular and least popular arts.
 7. Comparing updates based on timestamps.
 
+# Questions
+
+1. Will this replace manual proof-searching and manual-reviewing? No. 
+It will make your data collection faster, but it won't replace manual
+reviewing as manual proof-searching allows you to look 
+for more proofs inside or outside dA, and manual reviewing helps you
+to make a better decision regarding a deviant.
+
+2. Will there be updates? Probably yes. Use 'git pull' command to
+update.
+
 ![Screenshot 2023-01-12 141556](https://user-images.githubusercontent.com/97293254/212002194-e35e0573-2405-4e72-8792-f806dfcfeaa3.jpg)
 
 # How to use the fave checker

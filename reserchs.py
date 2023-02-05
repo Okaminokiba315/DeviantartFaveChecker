@@ -4,6 +4,7 @@ from urlextract import URLExtract
 from bs4 import BeautifulSoup
 import csv
 
+written = False
 questionable = 0
 straight_nsfw = 0
 maturelebels = ['']*10
@@ -238,7 +239,9 @@ def save_csv(keyword, lists,favelists,arttype,maturelevel,linklists):
     csv_header = ['No.', 'Title', 'Faves','Type','Artist','Mature','Link']
     with open(f'{keyword}.csv','w',encoding='utf-8',newline='') as f:
         arts = csv.writer(f)
-        arts.writerow(csv_header)
+        if written == False:
+            arts.writerow(csv_header)
+            written = True
         for i in range(len(lists)):
             arts.writerow([i+1,lists[i],favelists[i],arttype[i],keyword,maturelevel[i],linklists[i]])
 

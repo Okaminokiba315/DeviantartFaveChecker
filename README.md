@@ -25,7 +25,7 @@ parent code will be highly appreciated.
 
 # This mini project is useful for:
 1. Seeing a summary of your and your fellow deviant's recent arts number of favorites.
-2. Detecting a change of a deviant's username.
+2. Detecting a change of a deviant's username or art status.
 3. Determining whether an account is safe for general audiences or not.
 4. Knowing deactivated accounts and unused account names.
 5. Collecting newest proofs of an account's arts in .txt and .csv format.
@@ -42,7 +42,8 @@ Then, copy the line below (without the ' ') and paste it to the command prompt.
 
 A folder named DeviantartFaveChecker and its contents will appear in your directory.
 
-2. Open the entire folder with your favorite compiler, and run the 'reserchs.py' file. 
+2. Open the entire folder with your favorite compiler, and run the 'reserchs.py' or 'reserchs_alt.py' file with the command 'python reserchs.py' or 'python reserchs_alt.py'
+
 If you have downloaded the package for the first time, you might be asked to
 install "requests", "urlextract", and "bs4" (Thanks PeterKart for pointing out).
 
@@ -66,15 +67,19 @@ Keep in mind that this favechecker can tolerate uppercase and lowercase letters,
 The program will continue properly if the user is found.
 (The program accepts a deviant's old username before being replaced by their new username but the program will terminate if the deviant's account is suspended or deleted.)
 
-4. After you see the result, a .csv file would be made.
+4. A .csv or .txt file would be made by your preferences. You will also be free to choose
+to display the result on the terminal.
 
 # Hopes for Future Works
 1. Better Error Handling
 2. Better handling for deviants with fave number of 1K and up
 3. Ranking most used tags of a deviant to determine their interests.
+4. Faster process for 'reserchs_alt.py'
 
 # Updates
 
 1. 1st Feb 2023 = Least faved and most faved, with percentage of faves difference.
 2. 2nd Feb 2023 = Handling 1K+ faves with basic approach (removing '.' and converting K to '000'), Adding Links and Mature content warning for some artists
 3. 4th Feb 2023 = Handling mature content indicator separately for visual-art and literature works. Adding choice to display proofs with terminal or by csv table and txt. Deleted repeated function. Added documentation.
+4. 5th Feb 2023 = Added 'reserchs_alt.py'. Limited function and slower than its
+counterpart, but can retrieve more art infos up to all arts of an user.

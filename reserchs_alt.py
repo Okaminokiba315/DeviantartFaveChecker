@@ -145,8 +145,7 @@ keyword = keyword.upper()
 #print_txt(keyword)
 #exit()
 printme = input("\nPrint .csv proof (Y/N)?>")
-if printme == 'Y' or printme == 'y':
-    save_csv2(keyword)
+
 printme2 = input("\nPrint .txt proof (Y/N)?>")
 
 printables += '\nLIST OF ALL '+ keyword +' WORKS'
@@ -265,17 +264,22 @@ while devsnumber > 0:
     straight_nsfw_a += straight_nsfw
     totaldone=numofdeviation-devsnumber
     totaldone = (totaldone*100)/numofdeviation
+    totaldonewritten = "%.2f" % totaldone
     if totaldone < 100:
-        print (f'\nCalculation {totaldone}% done!')
+        print (f'\nCalculation {totaldonewritten}% done!')
     else:
         print('\nCalculation done!')
     #To give requests some delay
     time.sleep(1)
 
 questionable_arts = questionable_a/numofdeviation
+questionable_arts = questionable_arts*100
+questionable_arts = "%.2f" % questionable_arts
 nsfw_arts = straight_nsfw_a/numofdeviation
+nsfw_arts=nsfw_arts*100
+nsfw_arts = "%.2f" % nsfw_arts
 printables_a = ''
-printables_a += f'\nFrom {numofdeviation} total arts, \n{questionable_a} ({questionable_arts*100}%) are questionable, \nand {straight_nsfw_a} ({nsfw_arts*100}%) are not safe for work.\n'
+printables_a += f'\nFrom {numofdeviation} total arts, \n{questionable_a} ({questionable_arts}%) are questionable, \nand {straight_nsfw_a} ({nsfw_arts}%) are not safe for work.\n'
 printables_a += printables
 
 del printables
@@ -285,6 +289,9 @@ keyword = keyword.lower()
 printmea = input("\nDisplay results in terminal (Y/N)?>")
 if printmea == 'Y' or printmea == 'y':
     print(printables_a)
+
+if printme == 'Y' or printme == 'y':
+    save_csv2(keyword)
 
 if printme2 == 'Y' or printme2 == 'y':
     #print_txt(keyword) #--> Only uncomment in maintenances or mods.

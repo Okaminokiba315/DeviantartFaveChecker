@@ -264,10 +264,7 @@ printables+= f"\nThe max difference of fave earned by two most recent pictures a
 
 keyword = keyword.lower()
 
-#Displaying results
-printmea = input("\nDisplay results in terminal (Y/N)?>")
-if printmea == 'Y' or printmea == 'y':
-    print(printables)
+
 
 printme = input("\nPrint .csv proof (Y/N)?>")
 if printme == 'Y' or printme == 'y':
@@ -277,5 +274,10 @@ if printme2 == 'Y' or printme2 == 'y':
     #print_txt(keyword) #--> Only uncomment in maintenances or mods.
     printprintables(printables)
 
+#Displaying results
+printmea = input("\nDisplay results in terminal (Y/N)?>")
+if printmea == 'Y' or printmea == 'y':
+    print(printables)
+    
 print("\nThank you for using this checker!\n")
 exit()

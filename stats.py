@@ -5,43 +5,85 @@ import math
 printables = ''
 filez = "okaminokiba315_202327935.csv"
 bannedwords = []
-#df=pd.read_csv("voarl_2023262231.csv",usecols=["Title","Faves","Mature"])
-#print("The dataframe is:")
-#x = df.values.tolist()[:-1]
-#print(x)
 
 filez = input("Add .csv input to check> ")
 if filez[-4:] != ".csv":
     filez = filez + ".csv"
 
+def median(x):
+    print('a')
+    print (len(x))
+    medianplace = int(len(x)/2)
+    if len(x) % 2 == 0:
+        medianplace2 = int(medianplace - 1)
+        print(medianplace,medianplace2)
+        
+        a= str(x[medianplace])[1:-3]
+        b= str(x[medianplace2])[1:-3]
+        print(a,b)
+        a = int(a)
+        b = int(b)
+        dv = int((int(a)+int(b))/2)
+        print("\nMedian: "+str(dv))
+        return int(dv)
+    else:
+        print(x[medianplace])
+        dv = int(str(x[medianplace])[1:-3])
+        print("\nMedian: "+ str(dv))
+        return int(dv)
+
 def fave_ct(filez):
-    df=pd.read_csv(filez,usecols=["Faves"])
+    try:
+        df=pd.read_csv(filez,usecols=["Faves"])
+    except FileNotFoundError:
+        print("File not found! Make sure you typed the file name correctly or the file exists!")
+        exit()
+    yg=pd.read_csv(filez,usecols=["Title"])
     x = df.values.tolist()[:-1]
+    yg = yg.values.tolist()[:-1]
     aaaa = []
+
+    #y = average
     y = 0
     for i in range (len(x)):
         xy = str(x[i])
-        print(xy)
+        #print(xy)
         y += float(xy[1:-1])
         aaaa.append(float(xy[1:-1]))
     y=y/len(x)
-    print(y)
+    #print(y)
+
+    #Variance = sum(value i - average)**2
     variance_case = 0
     ssss = []
     for i in range (len(x)):
         spr = str(x[i])
         a = float(spr[1:-1])
         a = a-y
-        print(a)
+        #print(a)
         ssss.append(a)
         a = pow(a,2)
         variance_case += a
-        print(f"{i+1}. {a}")
+        #print(f"{i+1}. {a}")
     variance_case = variance_case/len(x)
-    print(f"Var: {variance_case}")
+    print(f"\nVar: {variance_case}")
 
     std_deviation = math.sqrt(variance_case)
-    print(f"Std Deviation: {std_deviation}")
+    print(f"\nStd Deviation: {std_deviation}")
+
+    medyan = median(x)
+
+    zscore = []
+    outlier_yes_no = []
+    for i in range(len(x)):
+        z = (aaaa[i]-y)/std_deviation
+        if z < -2.5 or z > 2.5:
+            outlier_yes_no.append('Outlier')
+        else:
+            outlier_yes_no.append('')
+        zscore.append(z)
+        print (yg[i],zscore[i],outlier_yes_no[i])
+    
     plt.hist(aaaa)
     plt.show()
     plt.hist(ssss)
@@ -122,6 +164,7 @@ def safe_content():
             step_two()
     else:
         step_two()
+fave_ct(filez)
 bb = input('Check for unsafe content?(Y/N)>')      
 if bb.lower() == 'y':
     safe_content()
